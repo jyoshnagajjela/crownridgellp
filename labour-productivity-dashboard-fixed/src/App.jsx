@@ -1,9 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useAuth } from './hooks/useAuth'
 import { useRecords } from './hooks/useRecords'
-import { useEffect } from 'react'
+
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/Layout'
+
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import Dashboard from './pages/Dashboard'
@@ -14,6 +16,7 @@ import DetailView from './pages/DetailView'
 
 function App() {
   const { user, logout } = useAuth()
+
   const {
     records,
     loading: recordsLoading,
@@ -29,15 +32,20 @@ function App() {
     if (user) {
       fetchRecords()
     }
-  }, [user])
+  }, [user, fetchRecords])
 
   return (
     <Routes>
-      {/* Public routes */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/login"
+        element={user ? <Navigate to="/" replace /> : <LoginPage />}
+      />
 
-      {/* Protected routes with Layout */}
+      <Route
+        path="/register"
+        element={user ? <Navigate to="/" replace /> : <RegisterPage />}
+      />
+
       <Route
         element={
           <ProtectedRoute user={user}>
@@ -56,10 +64,12 @@ function App() {
             />
           }
         />
+
         <Route
           path="entry"
           element={<LabourEntryForm onSubmit={addRecord} />}
         />
+
         <Route
           path="records"
           element={
@@ -70,6 +80,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="analytics"
           element={
@@ -81,6 +92,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="detail/:id"
           element={
@@ -93,7 +105,6 @@ function App() {
         />
       </Route>
 
-      {/* Catch-all redirect */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

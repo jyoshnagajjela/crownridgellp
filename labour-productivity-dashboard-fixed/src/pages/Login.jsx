@@ -6,14 +6,18 @@ import ErrorAlert from '../components/ErrorAlert'
 function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   const { login, loading, error, clearError } = useAuth()
+
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const user = await login(email, password)
-    if (user) {
-      navigate('/')
+
+    const loggedUser = await login(email, password)
+
+    if (loggedUser) {
+      navigate('/', { replace: true })
     }
   }
 
@@ -23,6 +27,7 @@ function LoginPage() {
         <h1 className="text-3xl font-bold text-slate-900 mb-2">
           Crownridge LLP
         </h1>
+
         <p className="text-slate-600 mb-6">
           Labour Productivity Dashboard Login
         </p>
@@ -37,7 +42,7 @@ function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
             disabled={loading}
-            className="w-full mb-4 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full mb-4 px-4 py-2 border border-slate-300 rounded-lg"
           />
 
           <input
@@ -47,21 +52,21 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             disabled={loading}
-            className="w-full mb-4 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full mb-4 px-4 py-2 border border-slate-300 rounded-lg"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg"
           >
             {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-slate-600">
+        <p className="mt-4 text-center">
           New user?{' '}
-          <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+          <Link to="/register" className="text-blue-600">
             Register here
           </Link>
         </p>
