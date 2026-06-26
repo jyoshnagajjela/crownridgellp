@@ -1,6 +1,7 @@
+import { SkeletonTableRows } from '../components/LoadingSkeleton'
 import RecordsTable from '../components/RecordsTable'
 
-function LabourRecords({ records, onDelete, onViewDetail }) {
+function LabourRecords({ records, loading, onDelete }) {
   return (
     <div>
       <div className="bg-white border-b border-slate-200 p-8">
@@ -8,7 +9,13 @@ function LabourRecords({ records, onDelete, onViewDetail }) {
         <p className="text-slate-600 mt-2">View and manage all labour entries</p>
       </div>
       <div className="bg-white">
-        <RecordsTable records={records} onDelete={onDelete} onViewDetail={onViewDetail} />
+        {loading ? (
+          <div className="p-6">
+            <SkeletonTableRows rows={8} />
+          </div>
+        ) : (
+          <RecordsTable records={records} onDelete={onDelete} />
+        )}
       </div>
     </div>
   )

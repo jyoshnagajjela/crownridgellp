@@ -1,32 +1,65 @@
 import {
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
 } from 'recharts'
 
-function AnalyticsChart({ type, title, data, dataKey, xAxisKey, colors, formatter }) {
-  const defaultColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']
+function AnalyticsChart({
+  type,
+  title,
+  data,
+  dataKey,
+  xAxisKey,
+  colors,
+  formatter
+}) {
+  const defaultColors = [
+    '#2563eb',
+    '#10b981',
+    '#f59e0b',
+    '#ef4444',
+    '#8b5cf6',
+    '#ec4899'
+  ]
+
   const chartColors = colors || defaultColors
 
   if (type === 'pie') {
     return (
-      <div className="p-6 bg-white rounded-lg border border-slate-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900 mb-4">{title}</h3>
-        <ResponsiveContainer width="100%" height={300}>
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 p-6">
+        <h3 className="text-lg font-semibold text-slate-800 mb-6">
+          {title}
+        </h3>
+
+        <ResponsiveContainer width="100%" height={320}>
           <PieChart>
             <Pie
               data={data}
+              dataKey={dataKey}
               cx="50%"
               cy="50%"
-              labelLine={false}
+              outerRadius={95}
+              innerRadius={55}
               label={({ name, value }) => `${name}: ${value}`}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey={dataKey}
+              labelLine={false}
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                <Cell
+                  key={index}
+                  fill={chartColors[index % chartColors.length]}
+                />
               ))}
             </Pie>
+
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>
@@ -36,32 +69,77 @@ function AnalyticsChart({ type, title, data, dataKey, xAxisKey, colors, formatte
 
   if (type === 'line') {
     return (
-      <div className="p-6 bg-white rounded-lg border border-slate-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900 mb-4">{title}</h3>
-        <ResponsiveContainer width="100%" height={300}>
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 p-6">
+        <h3 className="text-lg font-semibold text-slate-800 mb-6">
+          {title}
+        </h3>
+
+        <ResponsiveContainer width="100%" height={320}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey={xAxisKey} stroke="#64748b" />
-            <YAxis stroke="#64748b" />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#e2e8f0"
+            />
+
+            <XAxis
+              dataKey={xAxisKey}
+              tick={{ fill: '#64748b', fontSize: 12 }}
+            />
+
+            <YAxis
+              tick={{ fill: '#64748b', fontSize: 12 }}
+            />
+
             <Tooltip />
-            <Line type="monotone" dataKey={dataKey} stroke={chartColors[0]} strokeWidth={2} dot={{ fill: chartColors[0] }} />
+
+            <Line
+              type="monotone"
+              dataKey={dataKey}
+              stroke={chartColors[0]}
+              strokeWidth={3}
+              dot={{
+                fill: chartColors[0],
+                r: 5
+              }}
+              activeDot={{
+                r: 7
+              }}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
     )
   }
 
-  // Bar chart (default)
   return (
-    <div className="p-6 bg-white rounded-lg border border-slate-200 shadow-sm">
-      <h3 className="text-lg font-semibold text-slate-900 mb-4">{title}</h3>
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-all duration-300 p-6">
+      <h3 className="text-lg font-semibold text-slate-800 mb-6">
+        {title}
+      </h3>
+
+      <ResponsiveContainer width="100%" height={320}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-          <XAxis dataKey={xAxisKey} stroke="#64748b" />
-          <YAxis stroke="#64748b" />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#e2e8f0"
+          />
+
+          <XAxis
+            dataKey={xAxisKey}
+            tick={{ fill: '#64748b', fontSize: 12 }}
+          />
+
+          <YAxis
+            tick={{ fill: '#64748b', fontSize: 12 }}
+          />
+
           <Tooltip formatter={formatter} />
-          <Bar dataKey={dataKey} fill={chartColors[0]} radius={[8, 8, 0, 0]} />
+
+          <Bar
+            dataKey={dataKey}
+            fill={chartColors[0]}
+            radius={[10, 10, 0, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

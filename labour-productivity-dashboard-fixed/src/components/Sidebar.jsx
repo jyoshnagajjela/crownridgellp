@@ -1,4 +1,10 @@
-import { BarChart3, ClipboardList, FileText, PieChart } from 'lucide-react'
+import {
+  BarChart3,
+  ClipboardList,
+  FileText,
+  PieChart,
+  Building2,
+} from 'lucide-react'
 
 function Sidebar({ currentPage, onNavigate, totalWorkers }) {
   const links = [
@@ -9,20 +15,35 @@ function Sidebar({ currentPage, onNavigate, totalWorkers }) {
   ]
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200 shadow-sm">
-      <div className="p-6 border-b border-slate-200">
-        <h1 className="text-2xl font-bold text-blue-600">
-          Crownridge LLP
-        </h1>
+    <aside className="w-64 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white flex flex-col shadow-2xl">
 
-        <p className="text-sm text-slate-500 mt-1">
-          Project Labour Productivity Dashboard
-        </p>
+      {/* Logo */}
+      <div className="p-6 border-b border-slate-700">
+        <div className="flex items-center gap-3">
+          <div className="bg-blue-600 p-2 rounded-xl shadow-lg">
+            <Building2 size={24} />
+          </div>
+
+          <div>
+            <h1 className="text-xl font-bold tracking-wide">
+              Crownridge LLP
+            </h1>
+
+            <p className="text-xs text-slate-400 mt-1">
+              Labour Productivity Dashboard
+            </p>
+          </div>
+        </div>
       </div>
 
-      <nav className="p-4">
+      {/* Navigation */}
+      <nav className="flex-1 px-4 py-6">
+        <p className="text-xs uppercase tracking-widest text-slate-500 mb-4 px-3">
+          Navigation
+        </p>
+
         <ul className="space-y-2">
-          {links.map(link => {
+          {links.map((link) => {
             const Icon = link.icon
             const isActive = currentPage === link.id
 
@@ -30,14 +51,17 @@ function Sidebar({ currentPage, onNavigate, totalWorkers }) {
               <li key={link.id}>
                 <button
                   onClick={() => onNavigate(link.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive
-                      ? 'bg-blue-100 text-blue-700 font-semibold'
-                      : 'text-slate-700 hover:bg-slate-100'
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg scale-[1.02]'
+                      : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
                   <Icon size={20} />
-                  <span>{link.label}</span>
+
+                  <span className="font-medium">
+                    {link.label}
+                  </span>
                 </button>
               </li>
             )
@@ -45,20 +69,25 @@ function Sidebar({ currentPage, onNavigate, totalWorkers }) {
         </ul>
       </nav>
 
-      <div
-        className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200"
-        style={{ width: '16rem' }}
-      >
-        <div className="p-3 bg-blue-50 rounded-lg text-center">
-          <p className="text-xs text-slate-600">
+      {/* Workforce Card */}
+      <div className="p-4 border-t border-slate-700">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-5 shadow-xl">
+
+          <p className="text-xs uppercase tracking-widest text-blue-100">
             Total Workforce
           </p>
 
-          <p className="text-2xl font-bold text-blue-600">
+          <h2 className="text-4xl font-bold mt-3">
             {totalWorkers}
+          </h2>
+
+          <p className="text-sm text-blue-100 mt-2">
+            Active Workers
           </p>
+
         </div>
       </div>
+
     </aside>
   )
 }
