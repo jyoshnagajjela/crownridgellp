@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-const API_URL = 'http://localhost:5000/api/auth'
+const API_URL = 'https://crownridgellp-ldd9.onrender.com/api/auth'
 
 export function useAuth() {
   const [user, setUser] = useState(() => {

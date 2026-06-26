@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-const API_URL = 'http://localhost:5000/api/project_labour_productivity'
+const API_URL = 'https://crownridgellp-ldd9.onrender.com/api/records'
 
 export function useRecords() {
   const [records, setRecords] = useState([])
